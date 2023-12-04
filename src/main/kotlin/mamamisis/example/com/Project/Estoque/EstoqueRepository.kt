@@ -1,14 +1,18 @@
-import mamamisis.example.com.Project.Estoque.ItenEstoque
+package mamamisis.example.com.Project.Estoque
+
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
 @Repository
-class EstoqueRepository(@Autowired
-                        private val jdbcTemplate: JdbcTemplate) {
+class EstoqueRepository @Autowired constructor(private val jdbcTemplate: JdbcTemplate) {
+
     fun getEstoque(): List<ItenEstoque> {
-        val sqlQuery = "select id_ingrediente, descricao_ingrdiente, quantidade, esgotado from estoque"
-        val itensEstoque = jdbcTemplate.query(sqlQuery) { rs, _ ->
+        val sql = """
+            select id_ingrediente, descricao_ingrdiente, quantidade, esgotado from estoque
+        """.trimIndent()
+        val itensEstoque = jdbcTemplate.query(sql) { rs, _ ->
             ItenEstoque(
                     rs.getInt("id_ingrediente"),
                     rs.getString("descricao_ingrdiente"),

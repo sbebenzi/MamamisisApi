@@ -16,6 +16,12 @@ class Comandas {
             field = value
         }
 
+    var mesa : Int? = null
+        get() = field
+        set(value) {
+            field = value
+        }
+
     var status_comanda: Int? = null
         get() = field
         set(value) {

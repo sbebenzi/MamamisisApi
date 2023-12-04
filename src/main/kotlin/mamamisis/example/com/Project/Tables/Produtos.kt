@@ -16,6 +16,12 @@ class Produtos {
             field = value
         }
 
+    var nome_produto:String? = null
+        get() = field
+        set(value) {
+            field = value
+        }
+
     var descricao:String? = null
         get() = field
         set(value) {
