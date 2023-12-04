@@ -11,17 +11,15 @@ class Itens {
         set(value) {
             field = value
         }
-    @ManyToOne
     @JoinColumn(name = "id_comanda")
-    var comanda: Comandas? = null
+    var comanda: Int? = null
         get() = field
         set(value) {
             field = value
         }
 
-    @ManyToOne
     @JoinColumn(name = "id_produto")
-    var produto:Produtos? = null
+    var produto:Int? = null
         get() = field
         set(value) {
             field = value
