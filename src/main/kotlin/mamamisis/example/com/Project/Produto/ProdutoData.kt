@@ -10,12 +10,7 @@ data class Produto(
 data class ProdutoInserir(
         val nome:String,
         val descricao:String,
-        val valor:Double,
-        val ingredientes:List<Ingredientes>
-)
-
-data class Ingredientes(
-        val descricao:String
+        val valor:Double
 )
 
 data class ProdutoAlterar(

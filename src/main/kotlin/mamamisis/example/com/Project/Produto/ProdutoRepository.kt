@@ -111,23 +111,4 @@ class ProdutoRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
         jdbcTemplate.update(sql,id)
     }
 
-    fun verificaExisteIngrediente(ingrediente: Ingredientes):Int? {
-        val sql = """
-            select a.id_ingrediente from estoque a 
-            where descricao = ?
-        """.trimIndent()
-
-        return jdbcTemplate.query(sql,ingrediente.descricao){rs,_->rs.getInt("id_ingrediente")}.firstOrNull()
-    }
-
-    fun adicionaIngrdiente(ingrediente: Ingredientes) {
-        val sql = """
-            insert into estoque a (a.descricao,a.quantidade,a.esgotado)
-            values (?,0,0)
-        """.trimIndent()
-
-        jdbcTemplate.update(sql,ingrediente.descricao)
-    }
-
-
 }

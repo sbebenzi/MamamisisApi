@@ -37,11 +37,6 @@ class ProdutoService {
         return try {
             repository.gravaProduto(produto, id)
             val produtoInserido = repository.getProdutoInserido(id)
-            produto.ingredientes.forEach{ingrediente ->
-                if(repository.verificaExisteIngrediente(ingrediente) == 0){
-                    repository.adicionaIngrdiente(ingrediente)
-                }
-            }
             produtoInserido?.let {
                 ResponseEntity.ok(it)
             } ?: ResponseEntity.badRequest().body("Erro ao obter o produto inserido")
