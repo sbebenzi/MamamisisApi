@@ -75,4 +75,32 @@ class ComandaRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
 
         return qtdComanda != 0
     }
+
+    fun alteraComanda(numMesa: Int, comanda: Int) {
+        val sql = """
+            update comanda set mesa = ?
+            where id_comanda = ? 
+        """.trimIndent()
+
+        jdbcTemplate.update(sql,numMesa,comanda)
+    }
+    fun getValorComanda(comanda:Int):Double{
+        val sql = """
+            select sum(b.valor)as valorTotal from itens a 
+            left join produtos b on (a.produto = b.id_produto)
+            where a.comanda = ? 
+        """.trimIndent()
+
+        return jdbcTemplate.query(sql,comanda){rs,_->rs.getDouble("valorTotal")}.first()
+    }
+
+    fun getValorComandasMesa(numMesa: Int): Double {
+        val sql = """
+            select sum(b.valor)as valorTotal from itens a 
+            left join produtos b on (a.produto = b.id_produto)
+            where a.mesa = ? 
+        """.trimIndent()
+
+        return jdbcTemplate.query(sql,numMesa){rs,_->rs.getDouble("valorTotal")}.first()
+    }
 }

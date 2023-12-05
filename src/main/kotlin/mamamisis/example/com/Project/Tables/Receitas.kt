@@ -12,7 +12,6 @@ class Receitas {
             field = value
         }
 
-    @ManyToOne
     @JoinColumn(name = "id_produto")
     var produto: Int? = null
         get() = field
@@ -26,7 +25,6 @@ class Receitas {
             field = value
         }
 
-    @ManyToOne
     @JoinColumn(name = "id_ingrediente")
     var ingrediente: Int? = null
         get() = field

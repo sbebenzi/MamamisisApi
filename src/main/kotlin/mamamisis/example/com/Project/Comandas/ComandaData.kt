@@ -18,3 +18,15 @@ data class DadosComanda (
       val  mesa:Int,
       val  status_comanda:Int
 )
+
+data class ComandasFechadas(
+        val numMesa:Int,
+        val listaComandas:List<ComandaFechada>,
+        val total:Double
+)
+
+data class ComandaFechada(
+        val numComanda:Int,
+        var itens:List<Itens> ,
+        val valorComanda:Double
+)
