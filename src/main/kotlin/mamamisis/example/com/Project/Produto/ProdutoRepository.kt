@@ -110,5 +110,26 @@ class ProdutoRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
 
         jdbcTemplate.update(sql,id)
     }
+    fun verificaProdutoComanda(id: Int):Boolean {
+        val sql = """
+            select count(*) as qtd from itens a
+            left join comanda b on(b.comanda = a.id_comanda)
+            where a.produto = ? and 
+                  b.status_comanda = 1
+        """.trimIndent()
+
+        val qtd = jdbcTemplate.query(sql,id){rs,_->rs.getInt("qtd")}.firstOrNull() ?: 0
+
+        return qtd < 0
+
+    }
+
+    fun deleteReceita(id: Int) {
+        val sql = """
+            delete from receita 
+            where produto = ?
+        """.trimIndent()
+        jdbcTemplate.update(sql,id)
+    }
 
 }

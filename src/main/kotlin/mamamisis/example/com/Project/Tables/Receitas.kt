@@ -19,12 +19,6 @@ class Receitas {
             field = value
         }
 
-    var sequencia:Int? = null
-        get() = field
-        set(value) {
-            field = value
-        }
-
     @JoinColumn(name = "id_ingrediente")
     var ingrediente: Int? = null
         get() = field

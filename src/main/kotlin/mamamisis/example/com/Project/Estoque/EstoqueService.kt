@@ -21,4 +21,19 @@ class EstoqueService () {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
         }
     }
+
+    fun insereIngrdiente(payload: Ingrdiente): ResponseEntity<*> {
+        val id = repository.getNextId()
+        repository.insereIngrediente(payload,id)
+        val ingrdiente = repository.getIngrediente(id)
+        return ResponseEntity.ok().body(ingrdiente)
+    }
+
+    fun alteraQuantidadeEstoque(payload: IngredienteQuantidade): ResponseEntity<*> {
+        if(repository.naoExisteEstoque(payload)){
+            return ResponseEntity.badRequest().body("Não Existe Ingrediente de id:${payload.idIngrediente}")
+        }
+        repository.alteraQuantidadeEstoque(payload)
+        return ResponseEntity.ok().body(repository.getIngrediente(payload.idIngrediente))
+    }
 }

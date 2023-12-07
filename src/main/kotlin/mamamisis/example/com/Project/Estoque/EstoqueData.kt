@@ -6,3 +6,12 @@ data class ItenEstoque(
         val quantidade:Int,
         val esgotado:Int
 )
+data class Ingrdiente(
+        val descricao:String,
+        val quantidade:Int,
+)
+
+data class IngredienteQuantidade(
+        val idIngrediente:Int,
+        val novaQuantidade:Int
+)

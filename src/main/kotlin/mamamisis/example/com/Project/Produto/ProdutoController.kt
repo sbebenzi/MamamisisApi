@@ -41,5 +41,4 @@ class ProdutoController {
         return service.deleteProdutoById(id)
     }
 
-    //TODO ADICIONAR VALIDACAO PARA EXCLUIR PRODUTO -> NAO PODE ESTAR EM UMA COMANDA(ITEM). -> TEM QUE APAGAR A RECEITA JUNTO.
 }
