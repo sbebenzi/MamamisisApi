@@ -11,7 +11,7 @@ class ReceitaRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
     fun getReceitas(): List<Receita> {
         val sql = """
             select a.id, a.quantidade, b.nome_produto,b.descricao,b.valor from receitas a
-            left join produto b on (a.produto = b.id_produto)
+            left join produtos b on (a.produto = b.id_produto)
         """.trimIndent()
 
         return jdbcTemplate.query(sql){rs,_->
@@ -31,7 +31,7 @@ class ReceitaRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
     fun getReceitasId(id: Int): List<Receita> {
         val sql = """
             select a.id, a.quantidade, b.nome_produto,b.descricao,b.valor from receitas a
-            left join produto b on (a.produto = b.id_produto)
+            left join produtos b on (a.produto = b.id_produto)
             where a.produto = ?
         """.trimIndent()
 
@@ -63,7 +63,7 @@ class ReceitaRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
     fun insereItemReceita(payload: ItemReceita, id: Int) {
 
         val sql = """
-            insert into receitas id,produto, ingrediente, quantidade
+            insert into receitas (id,produto, ingrediente, quantidade)
              values(?,?,?,?)
         """.trimIndent()
 
@@ -89,6 +89,6 @@ class ReceitaRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
         val sql = """
              delete from receitas where id = ?
         """.trimIndent()
-        jdbcTemplate.update(sql)
+        jdbcTemplate.update(sql,id)
     }
 }

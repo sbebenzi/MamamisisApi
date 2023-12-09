@@ -1,5 +1,6 @@
 package mamamisis.example.com.Project.Comandas
 
+import mamamisis.example.com.Project.Iten.ItenRepository
 import mamamisis.example.com.Project.Produto.ProdutoRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
@@ -9,6 +10,10 @@ import org.springframework.stereotype.Service
 class ComandaService {
     @Autowired
     lateinit var repository: ComandaRepository
+    @Autowired
+    lateinit var repositoryProduto: ProdutoRepository
+    @Autowired
+    lateinit var repositoryITem: ItenRepository
     fun getComandaMesa(numMesa: Int): ResponseEntity<*> {
         val comandasMesa = repository.getComandaMesa(numMesa)
         val listComanda = mutableListOf<Comanda>()
@@ -54,6 +59,7 @@ class ComandaService {
         val comandasMesa = repository.getComandaMesa(numMesa)
         val listComanda = mutableListOf<ComandaFechada>()
         var valorComanda = 0.00
+        var valorComandaMesa = 0.00
 
         if(comandasMesa.isEmpty()){
             return ResponseEntity.badRequest().body("Não foram encontradas comandas para essa mesa.")
@@ -64,10 +70,28 @@ class ComandaService {
             listComanda.add(ComandaFechada(it,itensComanda,repository.getValorComanda(it)))
         }
 
-        val valorComandasMesa = repository.getValorComandasMesa(numMesa)
+        comandasMesa.forEach{ valorComandaMesa  +=  repository.getValorComandasMesa(it)}
 
-        return ResponseEntity.ok(ComandasFechadas(numMesa,listComanda,valorComandasMesa))
+        return ResponseEntity.ok(ComandasFechadas(numMesa,listComanda,valorComandaMesa))
 
+    }
+
+    fun addItemComanda(payload: ItemComanda):ResponseEntity<*> {
+        val idItem = repository.getItemId()
+        if(verificaItemComanda(payload) != ""){
+            return ResponseEntity.badRequest().body(verificaItemComanda(payload))
+        }
+        repository.adicionaItemComanda(payload,idItem)
+
+        return ResponseEntity.ok().body(repositoryITem.getItem(idItem))
+    }
+
+    private fun verificaItemComanda(payload: ItemComanda):String? {
+        return when {
+            !repository.verificaExisteComanda(payload.comanda) -> "Não foi possivel localizar comanda de numero ${payload.comanda}"
+            repositoryProduto.getProdutoId(payload.produto) == null -> "Não foi possivel achar um produto de id: ${payload.produto}"
+            else -> ""
+        }
     }
 
 }

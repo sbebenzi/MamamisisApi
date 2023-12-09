@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.query
 import org.springframework.http.ResponseEntity
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.stereotype.Repository
 
+@Repository
 class ItenRepository @Autowired constructor(private val jdbcTemplate: JdbcTemplate) {
     fun getItem(id: Int): Iten? {
         val sql = """
@@ -14,8 +16,8 @@ class ItenRepository @Autowired constructor(private val jdbcTemplate: JdbcTempla
         return jdbcTemplate.query(sql,id){rs,_->
             Iten(
         rs.getInt("id_item"),
-        rs.getInt("id_comanda"),
-        rs.getInt("id_produto"),
+        rs.getInt("comanda"),
+        rs.getInt("produto"),
         rs.getInt("status_item")
             )
         }.first()

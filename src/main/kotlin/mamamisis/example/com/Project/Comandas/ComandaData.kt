@@ -30,3 +30,8 @@ data class ComandaFechada(
         var itens:List<Itens> ,
         val valorComanda:Double
 )
+
+data class ItemComanda(
+        val comanda:Int,
+        val produto:Int
+)

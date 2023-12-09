@@ -113,7 +113,7 @@ class ProdutoRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
     fun verificaProdutoComanda(id: Int):Boolean {
         val sql = """
             select count(*) as qtd from itens a
-            left join comanda b on(b.comanda = a.id_comanda)
+            left join comandas b on(b.id_comanda = a.comanda)
             where a.produto = ? and 
                   b.status_comanda = 1
         """.trimIndent()
@@ -126,7 +126,7 @@ class ProdutoRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
 
     fun deleteReceita(id: Int) {
         val sql = """
-            delete from receita 
+            delete from receitas 
             where produto = ?
         """.trimIndent()
         jdbcTemplate.update(sql,id)

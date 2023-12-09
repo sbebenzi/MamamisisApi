@@ -28,7 +28,7 @@ class EstoqueRepository @Autowired constructor(private val jdbcTemplate: JdbcTem
 
     fun getNextId(): Int {
         val sql = """
-            select nvl(max(id_ingrdiente),0) + 1 as nextId from estoque 
+            select nvl(max(id_ingrediente),0) + 1 as nextId from estoque 
         """.trimIndent()
 
         return jdbcTemplate.query(sql) { rs, _ -> rs.getInt("nextId") }.first()

@@ -77,7 +77,6 @@ class ProdutoService {
     }
 
     fun deleteProdutoById(id: Int): ResponseEntity<*> {
-        //TODO ADICIONAR VALIDACAO PARA EXCLUIR PRODUTO -> NAO PODE ESTAR EM UMA COMANDA(ITEM). -> TEM QUE APAGAR A RECEITA JUNTO.
         val produto = repository.getProdutoId(id) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não foi possivel encontrar o produto com id:${id} para excluir")
         if(repository.verificaProdutoComanda(id)){
             return ResponseEntity.badRequest().body("Não é possivel deletar o produto pois o mesmo faz está em uma comanda.")

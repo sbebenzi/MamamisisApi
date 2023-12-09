@@ -25,7 +25,7 @@ class EstoqueController () {
     }
 
     @PostMapping("/insere-ingrediente")
-    fun insereIngrdiente(payload: Ingrdiente):ResponseEntity<*>{
+    fun insereIngrdiene(@RequestBody payload: Ingrdiente):ResponseEntity<*>{
         return estoqueService.insereIngrdiente(payload)
     }
 
